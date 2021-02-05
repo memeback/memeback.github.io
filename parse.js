@@ -8,15 +8,15 @@ const main = async (files) => {
 
   for (const file of files) {
     const html = await Deno.readTextFile(file);
-    for (const entry of parsePage(html)) {
+    for (const post of parsePage(html)) {
       // The date format is "<month>-<day>".
-      const date = sprintf("%02u-%02u", entry.date[1], entry.date[2]);
+      const date = sprintf("%02u-%02u", post.date[1], post.date[2]);
 
       if (!dates.hasOwnProperty(date)) {
         dates[date] = [];
       }
 
-      dates[date].push(entry);
+      dates[date].push(post);
     }
   }
 
@@ -28,20 +28,20 @@ const parsePage = (html) => {
 
   const tables = Array.from(dom.window.document.querySelectorAll("table"));
 
-  // The first three and the last two tables are not entries.
+  // The first three and the last two tables are not posts.
   const timeline = tables
     .slice(3, tables.length - 2)
-    .reduce(parseEntry, { entries: [], prevDate: null })
-    .entries
+    .reduce(parsePost, { posts: [], prevDate: null })
+    .posts
     .reverse();
 
   return timeline;
 };
 
-const parseEntry = (acc, entry) => {
-  const q = (sel) => entry.querySelector(sel);
+const parsePost = (acc, post) => {
+  const q = (sel) => post.querySelector(sel);
 
-  // Entries only carry a date if it is different from the previous.
+  // posts only carry a date if it is different from the previous.
   const date = parseDate(q) || acc.prevDate;
   acc.prevDate = date;
 
@@ -53,7 +53,7 @@ const parseEntry = (acc, entry) => {
   const contentWithNewWaybackDate = content
     .replace(/https:\/\/web.archive.org\/web\/\d{14}/g, newWaybackDate);
 
-  acc.entries.push({
+  acc.posts.push({
     date,
     content: contentWithNewWaybackDate,
     subject,
