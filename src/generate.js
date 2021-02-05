@@ -12,15 +12,12 @@ const main = async (args) => {
     const dir = `${outputDir}/${date}`;
     await Deno.mkdir(dir, { recursive: true });
 
-    const [prevDate, nextDate] = adjacent(dates, date);
+    const context = { posts };
+    [context.prevDate, context.nextDate] = adjacent(dates, date);
 
     Deno.writeTextFile(
       `${dir}/index.html`,
-      await renderPage({
-        nextDate,
-        posts,
-        prevDate,
-      }),
+      await renderPage(context),
       {
         append: false,
         create: true,
