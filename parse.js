@@ -1,10 +1,20 @@
-// usage: deno run parse.js < file.html > file.json
+// usage: deno run --allow-read parse.js file.html [file.html ...] > file.json
 
 import jsdom from "https://dev.jspm.io/jsdom";
 import "https://unpkg.com/sprintf-js@1.1.2/src/sprintf.js";
 
-const main = async () => {
-  const html = new TextDecoder().decode(await Deno.readAll(Deno.stdin));
+const main = async (files) => {
+  let timeline = [];
+
+  for (const file of files) {
+    const html = await Deno.readTextFile(file);
+    timeline = timeline.concat(parsePage(html));
+  }
+
+  console.log(JSON.stringify(timeline));
+};
+
+const parsePage = (html) => {
   const dom = new jsdom.JSDOM(html);
 
   const tables = Array.from(dom.window.document.querySelectorAll("table"));
@@ -16,7 +26,7 @@ const main = async () => {
     .entries
     .reverse();
 
-  console.log(JSON.stringify(timeline));
+  return timeline;
 };
 
 const parseEntry = (acc, entry) => {
@@ -104,4 +114,4 @@ const monthNum = (monthText) => {
   throw `Unknown month: "${monthText}"`;
 };
 
-main();
+main(Deno.args);
