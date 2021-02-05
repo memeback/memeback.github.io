@@ -4,14 +4,23 @@ import jsdom from "https://dev.jspm.io/jsdom";
 import "https://unpkg.com/sprintf-js@1.1.2/src/sprintf.js";
 
 const main = async (files) => {
-  let timeline = [];
+  const dates = {};
 
   for (const file of files) {
     const html = await Deno.readTextFile(file);
-    timeline = timeline.concat(parsePage(html));
+    for (const entry of parsePage(html)) {
+      // The date format is "<month>-<day>".
+      const date = sprintf("%02u-%02u", entry.date[1], entry.date[2]);
+
+      if (!dates.hasOwnProperty(date)) {
+        dates[date] = [];
+      }
+
+      dates[date].push(entry);
+    }
   }
 
-  console.log(JSON.stringify(timeline));
+  console.log(JSON.stringify(dates));
 };
 
 const parsePage = (html) => {
