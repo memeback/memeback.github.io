@@ -9,32 +9,38 @@ const main = async () => {
 
   const tables = Array.from(dom.window.document.querySelectorAll("table"));
 
-  let prevDate = null;
   // The first three and the last two tables are not entries.
-  const entries = tables.slice(3, tables.length - 2).map((entry) => {
-    const q = (sel) => entry.querySelector(sel);
+  const timeline = tables
+    .slice(3, tables.length - 2)
+    .reduce(parseEntry, { entries: [], prevDate: null })
+    .entries
+    .reverse();
 
-    // Entries only carry a date if it is different from the previous.
-    const date = parseDate(q) || prevDate;
-    prevDate = date;
+  console.log(JSON.stringify(timeline));
+};
 
-    const [content, subject, author] = parseContent(q);
-    const newWaybackDate = sprintf(
-      "https://web.archive.org/web/%u%02u%02u120000",
-      ...date,
-    );
-    const contentWithNewWaybackDate = content
-      .replace(/https:\/\/web.archive.org\/web\/\d{14}/g, newWaybackDate);
+const parseEntry = (acc, entry) => {
+  const q = (sel) => entry.querySelector(sel);
 
-    return {
-      date,
-      content: contentWithNewWaybackDate,
-      subject,
-      author,
-    };
-  }).reverse();
+  // Entries only carry a date if it is different from the previous.
+  const date = parseDate(q) || acc.prevDate;
+  acc.prevDate = date;
 
-  console.log(JSON.stringify(entries));
+  const [content, subject, author] = parseContent(q);
+  const newWaybackDate = sprintf(
+    "https://web.archive.org/web/%u%02u%02u120000",
+    ...date,
+  );
+  const contentWithNewWaybackDate = content
+    .replace(/https:\/\/web.archive.org\/web\/\d{14}/g, newWaybackDate);
+
+  acc.entries.push({
+    date,
+    content: contentWithNewWaybackDate,
+    subject,
+    author,
+  });
+  return acc;
 };
 
 const parseDate = (q) => {
