@@ -1,6 +1,6 @@
 // usage: deno run --allow-read parse.js file.html [file.html ...] > file.json
 
-import jsdom from "https://dev.jspm.io/jsdom";
+import jsdom from "https://dev.jspm.io/jsdom@16.4.0";
 import "https://unpkg.com/sprintf-js@1.1.2/src/sprintf.js";
 
 const main = async (files) => {
@@ -65,7 +65,7 @@ const parsePost = (acc, post) => {
 const parseDate = (q) => {
   const td = q("tbody > tr > td:nth-of-type(1)");
 
-  // JSDOM does not provide innerText.
+  // jsdom does not provide innerText.
   const match = td
     .innerHTML
     .match(/>([A-Za-z]+?)&nbsp;(\d+?),&nbsp;(\d+)/);
