@@ -4,16 +4,7 @@
 import * as dejs from "https://deno.land/x/dejs@0.9.3/mod.ts";
 
 const main = async (args) => {
-  if (args.length != 3) {
-    throw `wrong number of arguments: ${args.length}; expected 3`;
-  }
-  const [templatePath, jsonPath, outputDir] = args;
-
-  const pages = JSON.parse(await Deno.readTextFile(jsonPath));
-
-  const templateFile = await Deno.open(templatePath);
-  const renderPage = await dejs.compile(templateFile);
-  Deno.close(templateFile.rid);
+  const { renderPage, pages, outputDir } = await configure(args);
 
   const dates = Object.keys(pages).sort();
 
@@ -36,6 +27,21 @@ const main = async (args) => {
       },
     );
   }
+};
+
+const configure = async (args) => {
+  if (args.length != 3) {
+    throw `wrong number of arguments: ${args.length}; expected 3`;
+  }
+  const [templatePath, jsonPath, outputDir] = args;
+
+  const pages = JSON.parse(await Deno.readTextFile(jsonPath));
+
+  const templateFile = await Deno.open(templatePath);
+  const renderPage = await dejs.compile(templateFile);
+  Deno.close(templateFile.rid);
+
+  return { renderPage, pages, outputDir };
 };
 
 const adjacent = (xs, x) => {
