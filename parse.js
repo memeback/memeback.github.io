@@ -17,14 +17,21 @@ const main = async () => {
     // Entries only carry a date if it is different from the previous.
     const date = parseDate(q) || prevDate;
     prevDate = date;
-    const [content, subject, author] = parseContent(q);
-    const contentWithNewLinkDates = content
-      .replace(
-        /https:\/\/web.archive.org\/web\/\d{14}/g,
-        `https://web.archive.org/web/${date}120000`,
-      );
 
-    return { date, content: contentWithNewLinkDates, subject, author };
+    const [content, subject, author] = parseContent(q);
+    const newWaybackDate = sprintf(
+      "https://web.archive.org/web/%u%02u%02u120000",
+      ...date,
+    );
+    const contentWithNewWaybackDate = content
+      .replace(/https:\/\/web.archive.org\/web\/\d{14}/g, newWaybackDate);
+
+    return {
+      date,
+      content: contentWithNewWaybackDate,
+      subject,
+      author,
+    };
   }).reverse();
 
   console.log(JSON.stringify(entries));
@@ -41,7 +48,7 @@ const parseDate = (q) => {
   if (!match) return null;
   const [_, monthText, day, year] = match;
 
-  return sprintf("%u%02u%02u", year, monthNum(monthText), day);
+  return [year, monthNum(monthText), day];
 };
 
 const parseContent = (q) => {
