@@ -1,0 +1,5 @@
+<% for (const post of posts) { %>
+<h1><%= post.date[0] %></h1>
+<div><%- post.content %></div>
+<div>to <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Subject/<%= post.subject %>/"><%= post.subject %></a> by <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Author/<%= post.author %>"><%= post.author %></a></div>
+<% } %>
