@@ -18,8 +18,13 @@ const main = async () => {
     const date = parseDate(q) || prevDate;
     prevDate = date;
     const [content, subject, author] = parseContent(q);
+    const contentWithNewLinkDates = content
+      .replace(
+        /https:\/\/web.archive.org\/web\/\d{14}/g,
+        `https://web.archive.org/web/${date}120000`,
+      );
 
-    return { date, content, subject, author };
+    return { date, content: contentWithNewLinkDates, subject, author };
   }).reverse();
 
   console.log(JSON.stringify(entries));
@@ -36,7 +41,7 @@ const parseDate = (q) => {
   if (!match) return null;
   const [_, monthText, day, year] = match;
 
-  return sprintf("%u-%02u-%02u", year, monthNum(monthText), day);
+  return sprintf("%u%02u%02u", year, monthNum(monthText), day);
 };
 
 const parseContent = (q) => {
