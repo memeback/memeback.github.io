@@ -1,7 +1,7 @@
 // usage: deno run --allow-read parse.js file.html [file.html ...] > file.json
 
-import jsdom from "https://dev.jspm.io/jsdom@16.4.0";
-import "https://unpkg.com/sprintf-js@1.1.2/src/sprintf.js";
+import jsdom from "https://dev.jspm.io/npm:jsdom@16.4.0";
+import "https://dev.jspm.io/npm:sprintf-js@1.1.2/src/sprintf.js";
 
 const main = async (files) => {
   const dates = {};
