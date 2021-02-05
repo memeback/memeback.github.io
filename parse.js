@@ -73,7 +73,7 @@ const parseDate = (q) => {
   if (!match) return null;
   const [_, monthText, day, year] = match;
 
-  return [year, monthNum(monthText), day];
+  return [+year, monthNum(monthText), +day];
 };
 
 const parseContent = (q) => {
