@@ -1,5 +1,21 @@
-<% for (const post of posts) { %>
-<h1><%= post.date[0] %></h1>
-<div><%- post.content %></div>
-<div>to <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Subject/<%= post.subject %>/"><%= post.subject %></a> by <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Author/<%= post.author %>"><%= post.author %></a></div>
-<% } %>
+[ <a href="../<%= prevDate %>">Previous day</a> ]
+[ <a href="../<%= nextDate %>">Next day</a> ]
+<%
+let prevYear = -1;
+
+for (const post of posts) {
+  const year = post.date[0];
+  if (year != prevYear) {
+%>
+    <h1><%= year %></h1>
+<%
+  }
+%>
+  <article>
+    <div><%- post.content %></div>
+    <div>to <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Subject/<%= post.subject %>/"><%= post.subject %></a> by <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Author/<%= post.author %>"><%= post.author %></a></div>
+  </article>
+<%
+  prevYear = year;
+}
+%>
