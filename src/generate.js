@@ -1,10 +1,11 @@
-// usage: deno run --allow-read --allow-write=date/
-//                 src/generate.js src/page.ejs everything.json date/
+// usage: deno run --allow-read --allow-write=date/ \
+//                 src/generate.js src/page.ejs everything.json slogans.txt \
+//                 date/
 
 import * as dejs from "https://deno.land/x/dejs@0.9.3/mod.ts";
 
 const main = async (args) => {
-  const { renderPage, pages, outputDir } = await configure(args);
+  const { renderPage, pages, outputDir, slogans } = await configure(args);
 
   const dates = Object.keys(pages).sort();
 
@@ -17,6 +18,7 @@ const main = async (args) => {
     // Get rid of the leading zero.
     context.date.human = `${monthName(month)} ${+day}`;
     [context.date.prev, context.date.next] = adjacent(dates, date);
+    context.slogan = slogans[(month + day) % slogans.length];
 
     Deno.writeTextFile(
       `${dir}/index.html`,
@@ -30,18 +32,21 @@ const main = async (args) => {
 };
 
 const configure = async (args) => {
-  if (args.length != 3) {
-    throw `wrong number of arguments: ${args.length}; expected 3`;
+  if (args.length != 4) {
+    throw `wrong number of arguments: ${args.length}; expected 4`;
   }
-  const [templatePath, jsonPath, outputDir] = args;
+  const [templatePath, jsonPath, sloganPath, outputDir] = args;
 
   const pages = JSON.parse(await Deno.readTextFile(jsonPath));
+  const slogans = (await Deno.readTextFile(sloganPath))
+    .replace(/\s*$/, "")
+    .split(/\n/);
 
   const templateFile = await Deno.open(templatePath);
   const renderPage = await dejs.compile(templateFile);
   Deno.close(templateFile.rid);
 
-  return { renderPage, pages, outputDir };
+  return { renderPage, pages, outputDir, slogans };
 };
 
 const adjacent = (xs, x) => {
