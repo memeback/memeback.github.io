@@ -1,28 +1,29 @@
 // usage: deno run --allow-read --allow-write=date/ \
-//                 src/generate.js src/page.ejs everything.json slogans.txt \
-//                 date/
+//                 src/generate.js everything.json date/
 
 import * as dejs from "https://deno.land/x/dejs@0.9.3/mod.ts";
 
 const main = async (args) => {
-  const { renderPage, pages, outputDir, slogans } = await configure(args);
+  const { renderPage, pages, outputDir, srcDir } = await configure(args);
 
   const dates = Object.keys(pages).sort();
 
   for (const [date, posts] of Object.entries(pages)) {
-    const dir = `${outputDir}/${date}`;
-    await Deno.mkdir(dir, { recursive: true });
-
     const context = { date: { current: date }, posts };
     const [month, day] = date.split("-");
     // Get rid of the leading zero.
     context.date.human = `${monthName(month)} ${+day}`;
     [context.date.prev, context.date.next] = adjacent(dates, date);
-    context.slogan = slogans[(month + day) % slogans.length];
+
+    Deno.chdir(srcDir);
+    const page = await renderPage(context);
+
+    Deno.chdir(outputDir);
+    await Deno.mkdir(date, { recursive: true });
 
     Deno.writeTextFile(
-      `${dir}/index.html`,
-      await renderPage(context),
+      `${outputDir}/${date}/index.html`,
+      page,
       {
         append: false,
         create: true,
@@ -32,21 +33,21 @@ const main = async (args) => {
 };
 
 const configure = async (args) => {
-  if (args.length != 4) {
-    throw `wrong number of arguments: ${args.length}; expected 4`;
+  if (args.length != 2) {
+    throw `wrong number of arguments: ${args.length}; expected 2`;
   }
-  const [templatePath, jsonPath, sloganPath, outputDir] = args;
+  const [jsonPath, outputDirArg] = args;
+  const outputDir = await Deno.realPath(outputDirArg);
 
   const pages = JSON.parse(await Deno.readTextFile(jsonPath));
-  const slogans = (await Deno.readTextFile(sloganPath))
-    .replace(/\s*$/, "")
-    .split(/\n/);
 
-  const templateFile = await Deno.open(templatePath);
+  const srcDir = await Deno.realPath(new URL('.', import.meta.url).pathname);
+
+  const templateFile = await Deno.open(`${srcDir}/page.ejs`);
   const renderPage = await dejs.compile(templateFile);
   Deno.close(templateFile.rid);
 
-  return { renderPage, pages, outputDir, slogans };
+  return { renderPage, pages, outputDir, srcDir };
 };
 
 const adjacent = (xs, x) => {

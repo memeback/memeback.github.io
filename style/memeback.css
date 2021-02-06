@@ -43,3 +43,12 @@ article:nth-of-type(odd) {
 time.date {
   font-weight: bolder;
 }
+
+footer {
+  font-size: 62.5%;
+}
+
+#copyright {
+  background: black;
+  color: white;
+}
