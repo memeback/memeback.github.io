@@ -1,20 +1,29 @@
-const width = 500;
+const width = 625;
 const onDesktop = `@media (min-width: ${width}px)`;
 const onMobile = `@media (max-width: ${width - 1}px)`;
 
-const padding = 4;
+const padding = 5;
+
+const text = 20;
+const smallerText = 14;
 
 const css = `
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
+  font-size: 20px;
   max-width: ${width + 2*padding}px;
 }
 
 ${onDesktop} {
   body {
-    margin: 8px auto;
+    margin: 10px auto;
+  }
+}
+
+${onMobile} {
+  body {
+    font-size: 16px;
   }
 }
 
@@ -33,7 +42,7 @@ header > h1 {
 
 nav {
   display: flex;
-  font-size: 62.5%;
+  font-size: ${smallerText}px;
   justify-content: space-between;
   margin: ${padding * 3}px 0;
   width: 100%;
@@ -60,7 +69,7 @@ article:nth-of-type(odd) {
 }
 
 article > .metadata {
-  font-size: 62.5%;
+  font-size: ${smallerText}px;
   padding-top: ${padding}px;
 }
 
@@ -73,7 +82,7 @@ footer {
 }
 
 footer > * {
-  font-size: 62.5%;
+  font-size: ${smallerText}px;
   padding: ${padding}px;
   text-align: center;
 }

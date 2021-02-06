@@ -1,12 +1,18 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  max-width: 508px;
+  font-size: 20px;
+  max-width: 635px;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 625px) {
   body {
-    margin: 8px auto;
+    margin: 10px auto;
+  }
+}
+
+@media (max-width: 624px) {
+  body {
+    font-size: 16px;
   }
 }
 
@@ -14,7 +20,7 @@ header {
   background: black;
   color: white;
   text-align: center;
-  padding: 4px 0;
+  padding: 5px 0;
 }
 
 header > h1 {
@@ -25,9 +31,9 @@ header > h1 {
 
 nav {
   display: flex;
-  font-size: 62.5%;
+  font-size: 14px;
   justify-content: space-between;
-  margin: 12px 0;
+  margin: 15px 0;
   width: 100%;
 }
 
@@ -40,11 +46,11 @@ nav {
 }
 
 section > h2 {
-  padding-left: 4px;
+  padding-left: 5px;
 }
 
 article {
-  padding: 4px;
+  padding: 5px;
 }
 
 article:nth-of-type(odd) {
@@ -52,8 +58,8 @@ article:nth-of-type(odd) {
 }
 
 article > .metadata {
-  font-size: 62.5%;
-  padding-top: 4px;
+  font-size: 14px;
+  padding-top: 5px;
 }
 
 time.date {
@@ -61,12 +67,12 @@ time.date {
 }
 
 footer {
-  padding: 4px 0;
+  padding: 5px 0;
 }
 
 footer > * {
-  font-size: 62.5%;
-  padding: 4px;
+  font-size: 14px;
+  padding: 5px;
   text-align: center;
 }
 
