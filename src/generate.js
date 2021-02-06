@@ -12,8 +12,11 @@ const main = async (args) => {
     const dir = `${outputDir}/${date}`;
     await Deno.mkdir(dir, { recursive: true });
 
-    const context = { posts };
-    [context.prevDate, context.nextDate] = adjacent(dates, date);
+    const context = { date: {}, posts };
+    const [month, day] = date.split("-");
+    // Get rid of the leading zero.
+    context.date.human = `${monthName(month)} ${+day}`;
+    [context.date.prev, context.date.next] = adjacent(dates, date);
 
     Deno.writeTextFile(
       `${dir}/index.html`,
@@ -51,5 +54,22 @@ const adjacent = (xs, x) => {
 
   return [prev, next];
 };
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const monthName = (month) => monthNames[month - 1];
 
 main(Deno.args);

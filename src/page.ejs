@@ -1,21 +1,62 @@
-[ <a href="../<%= prevDate %>">Previous day</a> ]
-[ <a href="../<%= nextDate %>">Next day</a> ]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>memeback: <%= date.human %></title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" type="text/css" href="../../style/modern-normalize/modern-normalize.min.css">
+  <link rel="stylesheet" type="text/css" href="../../style/memeback.css">
+</head>
+<body>
+  <header>
+    <h1>memeback</h1>
+  </header>
+
+  <nav>
+    [ <a href="../<%= date.prev %>">Previous day</a> ]
+    [ <a href="../<%= date.next %>">Next day</a> ]
+  </nav>
+
+  <main>
 <%
+
 let prevYear = -1;
 
 for (const post of posts) {
   const year = post.date[0];
   if (year != prevYear) {
+    if (prevYear > -1) {
 %>
-    <h1><%= year %></h1>
+    </section>
 <%
-  }
+
+    } // if (prevYear > -1)
+
 %>
-  <article>
-    <div><%- post.content %></div>
-    <div>to <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Subject/<%= post.subject %>/"><%= post.subject %></a> by <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Author/<%= post.author %>"><%= post.author %></a></div>
-  </article>
+    <section>
+      <h2><%= year %></h2>
 <%
+
+  } // if (year != prevYear)
+
+%>
+      <article>
+        <div><%- post.content %></div>
+        <div>to <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Subject/<%= post.subject %>/"><%= post.subject %></a> by <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Author/<%= post.author %>"><%= post.author %></a></div>
+      </article>
+<%
+
   prevYear = year;
-}
+} // for (const post of posts)
+
 %>
+    </section>
+  </main>
+
+  <footer>
+    x
+  </footer>
+</body>
+</html>
