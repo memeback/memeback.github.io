@@ -19,11 +19,11 @@
 
   <nav>
     <div id="prev-day">[ <a href="../<%= date.prev %>">Previous day</a> ]</div>
+    <time class="date" datetime="<%= date.current %>"><%= date.human %></time>
     <div id="next-day">[ <a href="../<%= date.next %>">Next day</a> ]</div>
   </nav>
 
   <main>
-  <time datetime="<%= date.current %>" class="date"><%= date.human %></time>
 <%
 
 let prevPostYear = -1;
