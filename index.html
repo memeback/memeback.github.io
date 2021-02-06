@@ -10,7 +10,8 @@
   var day = date.getDay();
   if (month < 10) { month = "0" + month; }
   if (day < 10) { day = "0" + day; }
-  location.href += "date/" + month + "-" + day;
+  var dir = location.href.replace(/index\.html$/, "");
+  location.href = dir + "date/" + month + "-" + day;
 </script>
 <noscript>
   <h1>No JavaScript? Pick a date.</h1>
