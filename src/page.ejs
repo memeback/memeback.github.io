@@ -16,11 +16,12 @@
   </header>
 
   <nav>
-    [ <a href="../<%= date.prev %>">Previous day</a> ]
-    [ <a href="../<%= date.next %>">Next day</a> ]
+    <div id="prev-day">[ <a href="../<%= date.prev %>">Previous day</a> ]</div>
+    <div id="next-day">[ <a href="../<%= date.next %>">Next day</a> ]</div>
   </nav>
 
   <main>
+  <time datetime="<%= date.current %>" class="date"><%= date.human %></time>
 <%
 
 let prevYear = -1;
@@ -44,8 +45,8 @@ for (const post of posts) {
 
 %>
       <article>
-        <div><%- post.content %></div>
-        <div>to <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Subject/<%= post.subject %>/"><%= post.subject %></a> by <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Author/<%= post.author %>"><%= post.author %></a></div>
+        <div class="content"><%- post.content %></div>
+        <div class="metadata">to <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Subject/<%= post.subject %>/"><%= post.subject %></a> by <a href="https://web.archive.org/web/20130101120000/http://memepool.com/Author/<%= post.author %>"><%= post.author %></a></div>
       </article>
 <%
 
@@ -57,7 +58,8 @@ for (const post of posts) {
   </main>
 
   <footer>
-    x
+    <div id="copyright">Copyright © 1998 - 2012 Memepool.Com. All Rights Reserved. For entertainment purposes only. All content is provided as is, with no warrantee stated or implied regarding the quality or accuracy of any content on or off the memepool.com website. All trademarks, servicemarks, and copyrights are property of their respective owners.</div>
+    <div id="source">memeback</div>
   </footer>
 </body>
 </html>

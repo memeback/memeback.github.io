@@ -13,7 +13,7 @@ const main = async (args) => {
     const dir = `${outputDir}/${date}`;
     await Deno.mkdir(dir, { recursive: true });
 
-    const context = { date: {}, posts };
+    const context = { date: { current: date }, posts };
     const [month, day] = date.split("-");
     // Get rid of the leading zero.
     context.date.human = `${monthName(month)} ${+day}`;
