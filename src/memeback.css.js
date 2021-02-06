@@ -1,30 +1,22 @@
-const width = 625;
+const width = 500;
 const onDesktop = `@media (min-width: ${width}px)`;
 const onMobile = `@media (max-width: ${width - 1}px)`;
 
-const padding = 5;
+const padding = 4;
 
-const text = 20;
-const smallerText = 14;
+const text = 16;
+const smallerText = 10;
+
+const textMobile = 20;
+const smallerTextMobile = 14;
 
 const css = `
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
+  font-size: ${text}px;
   max-width: ${width + 2*padding}px;
-}
-
-${onDesktop} {
-  body {
-    margin: 10px auto;
-  }
-}
-
-${onMobile} {
-  body {
-    font-size: 16px;
-  }
+  margin: 8px auto;
 }
 
 header {
@@ -90,6 +82,25 @@ footer > * {
 #copyright {
   background: black;
   color: white;
+}
+
+${onMobile} {
+  body {
+    font-size: ${textMobile};
+    margin: 0;
+  }
+
+  nav {
+    font-size: ${smallerTextMobile}px;
+  }
+
+  article > .metadata {
+    font-size: ${smallerTextMobile}px;
+  }
+
+  footer > * {
+    font-size: ${smallerTextMobile}px;
+  }
 }
 
 `;
