@@ -9,11 +9,12 @@ const main = async (args) => {
   const dates = Object.keys(pages).sort();
 
   for (const [date, posts] of Object.entries(pages)) {
-    const context = { date: { current: date }, posts };
+    const context = { date: {}, posts };
     const [month, day] = date.split("-");
-    // Get rid of the leading zero.
+    // Convert the day to Number to get rid of the leading zero.
     context.date.human = `${monthName(month)} ${+day}`;
     [context.date.prev, context.date.next] = adjacent(dates, date);
+    context.messageN = +month + +day;
 
     Deno.chdir(srcDir);
     const page = await renderPage(context);

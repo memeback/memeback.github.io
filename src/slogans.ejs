@@ -1,8 +1,5 @@
 <%
 
-const [month, day] = current.split("-");
-const n = +month + +day;
-
 const slogans = [
   "the internet is forever",
   "now with 99% fewer <font> tags",
@@ -20,4 +17,4 @@ const slogans = [
   "for old people like you",
 ];
 
-%><%= slogans[n % slogans.length] %>
+%><%= slogans[messageN % slogans.length] %>

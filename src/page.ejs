@@ -13,7 +13,7 @@
   <header>
     <h1>memeback</h1>
     <div id="slogan"><%-
-      await include("slogans.ejs", { current: date.current })
+      await include("slogans.ejs", { messageN })
     %></div>
   </header>
 
@@ -55,13 +55,20 @@ for (const post of posts) {
   prevPostYear = postYear;
 } // for (const post of posts)
 
+const madeBy = [
+  'assembled</a> by',
+  'escaped from the lab</a> of',
+  'made</a> by',
+  'ripped, mixed, and burned</a> by',
+];
+
 %>
     </section>
   </main>
 
   <footer>
-    <div id="copyright">Copyright © 1998 - 2012 Memepool.Com. All Rights Reserved. For entertainment purposes only. All content is provided as is, with no warrantee stated or implied regarding the quality or accuracy of any content on or off the memepool.com website. All trademarks, servicemarks, and copyrights are property of their respective owners.</div>
-    <div id="source">memeback by D.&nbsp;Bohdan. <a href="https://github.com/memeback/memeback.github.io">Source code</a>.</div>
+    <div id="copyright">copyright © 1998 - 2012 memepool.com - all rights reserved. for entertainment purposes only. all content is provided as is, with no warranty stated or implied regarding the quality or accuracy of any content on or off the memepool.com website. all trademarks, servicemarks, and copyrights are property of their respective owners.</div>
+    <div id="source">memeback <a href="https://github.com/memeback/memeback.github.io"><%- madeBy[messageN % madeBy.length] %> D.&nbsp;Bohdan.</div>
   </footer>
 </body>
 </html>
