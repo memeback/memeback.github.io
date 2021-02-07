@@ -56,11 +56,13 @@ for (const post of posts) {
 } // for (const post of posts)
 
 const madeBy = [
-  'assembled</a> by',
-  'escaped from the lab</a> of',
-  'made</a> by',
-  'ripped, mixed, and burned</a> by',
+  ["assembled", "by"],
+  ["escaped from the lab", "of"],
+  ["made", "by"],
+  ["ripped, mixed, and burned", "by"],
 ];
+
+const [madeByLink, madeByAfterLink] = madeBy[messageN % madeBy.length];
 
 %>
     </section>
@@ -68,7 +70,7 @@ const madeBy = [
 
   <footer>
     <div id="copyright">copyright © 1998 - 2012 memepool.com - all rights reserved. for entertainment purposes only. all content is provided as is, with no warranty stated or implied regarding the quality or accuracy of any content on or off the memepool.com website. all trademarks, servicemarks, and copyrights are property of their respective owners.</div>
-    <div id="source">memeback <a href="https://github.com/memeback/memeback.github.io"><%- madeBy[messageN % madeBy.length] %> D.&nbsp;Bohdan.</div>
+    <div id="source">memeback <a href="https://github.com/memeback/memeback.github.io"><%= madeByLink %></a> <%= madeByAfterLink %> D.&nbsp;Bohdan.</div>
   </footer>
 </body>
 </html>
