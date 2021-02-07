@@ -10,8 +10,8 @@ See what was on [memepool](https://en.wikipedia.org/wiki/Memepool) on this day i
 
 ## License and credits
 
-This project's original source code and data are distributed under the MIT license.  See [`LICENSE`](LICENSE).
+**Memepool content is copyright (c) 1998&ndash;2012 memepool.com &mdash; all rights reserved.**
 
-Memepool content is copyright (c) 1998&ndash;2012 memepool.com &mdash; all rights reserved.
+This project's original source code and data are distributed under the MIT license.  See [`LICENSE`](LICENSE).
 
 [Modern-normalize](https://github.com/sindresorhus/modern-normalize) is distributed under the MIT license.  See [`style/modern-normalize/LICENSE`](style/modern-normalize/LICENSE).
