@@ -75,6 +75,7 @@ footer {
 
 footer > * {
   font-size: ${smallerText}px;
+  margin-top: ${padding}px;
   padding: ${padding}px;
   text-align: center;
 }
@@ -82,6 +83,10 @@ footer > * {
 #copyright {
   background: black;
   color: white;
+}
+
+#source {
+  font-weight: bolder;
 }
 
 ${onMobile} {

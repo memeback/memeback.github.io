@@ -61,6 +61,7 @@ footer {
 
 footer > * {
   font-size: 10px;
+  margin-top: 4px;
   padding: 4px;
   text-align: center;
 }
@@ -68,6 +69,10 @@ footer > * {
 #copyright {
   background: black;
   color: white;
+}
+
+#source {
+  font-weight: bolder;
 }
 
 @media (max-width: 499px) {
