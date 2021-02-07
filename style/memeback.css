@@ -92,4 +92,8 @@ footer > * {
   footer > * {
     font-size: 14px;
   }
+
+  #source {
+    font-weight: normal;
+  }
 }

@@ -106,6 +106,10 @@ ${onMobile} {
   footer > * {
     font-size: ${smallerTextMobile}px;
   }
+
+  #source {
+    font-weight: normal;
+  }
 }
 
 `;
