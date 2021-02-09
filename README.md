@@ -6,7 +6,7 @@ See what was on [memepool](https://en.wikipedia.org/wiki/Memepool) on this day i
 ## Statistics
 
 |  Year | Posts |
-|-------|-------|
+|------:|------:|
 |  1998 |   393 |
 |  1999 |  2038 |
 |  2000 |  1623 |
