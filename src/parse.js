@@ -5,14 +5,11 @@ import "https://dev.jspm.io/npm:sprintf-js@1.1.2/src/sprintf.js";
 
 const main = async (files) => {
   const dates = {};
-  let firstPost = 0;
 
   for (const file of files) {
     const html = await Deno.readTextFile(file);
 
-    // The chronologically first post is duplicated from the previous page.
-    // Drop it on all pages after the first.
-    for (const post of parsePage(html).slice(firstPost)) {
+    for (const post of parsePage(html)) {
       // The date format is "<month>-<day>".
       const date = sprintf("%02u-%02u", post.date[1], post.date[2]);
 
@@ -20,10 +17,18 @@ const main = async (files) => {
         dates[date] = [];
       }
 
+      let currentDate = dates[date];
+
+      // Skip a post if it is duplicated from the previous page.
+      if (
+        currentDate.length > 0 &&
+        currentDate[currentDate.length - 1].content === post.content
+      ) {
+        continue;
+      }
+
       dates[date].push(post);
     }
-
-    firstPost = 1;
   }
 
   console.log(JSON.stringify(dates));
